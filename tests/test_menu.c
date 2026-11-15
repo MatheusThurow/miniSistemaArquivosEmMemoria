@@ -1,4 +1,4 @@
-/* Testes de integracao do menu em C11/POSIX, sem Python.
+/* Testes de integracao do menu em C11/POSIX.
  * Executar a partir da raiz do projeto, apos compilar ./simulador.
  */
 #define _POSIX_C_SOURCE 200809L
