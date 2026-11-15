@@ -1,0 +1,30 @@
+COMO EXECUTAR PELO CMD DO WINDOWS
+
+1. Abra o Prompt de Comando (CMD).
+2. Copie e execute esta linha para compilar e abrir o programa:
+
+wsl -d Ubuntu-24.04 --cd /mnt/c/faculdade/SO/M3/miniSistemaArquivosEmMemoria -- bash -c "gcc -std=c11 -Wall -Wextra -Wpedantic -g -Iinclude src/*.c -o simulador && ./simulador"
+
+Se o programa ja estiver compilado, basta executar:
+
+wsl -d Ubuntu-24.04 --cd /mnt/c/faculdade/SO/M3/miniSistemaArquivosEmMemoria -- ./simulador
+
+Digite 0 no menu para sair. Os dados ficam apenas na memoria e desaparecem ao sair.
+
+OUTRA FORMA: ENTRAR NO UBUNTU PRIMEIRO
+
+No CMD, digite:
+wsl -d Ubuntu-24.04
+
+Depois, dentro do Ubuntu, execute uma linha por vez:
+cd /mnt/c/faculdade/SO/M3/miniSistemaArquivosEmMemoria
+gcc -std=c11 -Wall -Wextra -Wpedantic -g -Iinclude src/*.c -o simulador
+./simulador
+
+IMPORTANTE
+
+- O programa usa o Ubuntu-24.04 instalado no WSL desta maquina.
+- O caminho /mnt/c/... e o comando ./simulador pertencem ao Linux.
+- Nao digite ./simulador diretamente no CMD do Windows.
+- Se mover a pasta do projeto, ajuste o caminho nos comandos acima.
+- Nao precisa de internet para compilar e executar com WSL e GCC ja instalados.

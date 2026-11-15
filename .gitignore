@@ -1,0 +1,6 @@
+simulador
+tests/test_sistema
+tests/test_falhas
+tests/test_limites
+tests/test_usuarios
+tests/test_dinamico

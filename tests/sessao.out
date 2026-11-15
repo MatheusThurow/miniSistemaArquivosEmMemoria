@@ -1,0 +1,308 @@
+
+Usuario: ana | Grupo: alunos | Pasta atual: /
+1. Listar conteudo
+2. Criar pasta
+3. Entrar em pasta (nome ou absoluto)
+4. Voltar ao pai
+5. Criar arquivo
+6. Escrever arquivo
+7. Ler arquivo
+8. Copiar arquivo
+9. Mover ou renomear arquivo
+10. Excluir arquivo
+11. Detalhes
+12. Alterar permissoes
+13. Trocar usuario
+14. Simular execucao
+15. Mostrar blocos
+16. Criar usuario
+0. Sair
+Opcao: Nome na pasta atual: Sucesso
+
+Usuario: ana | Grupo: alunos | Pasta atual: /
+1. Listar conteudo
+2. Criar pasta
+3. Entrar em pasta (nome ou absoluto)
+4. Voltar ao pai
+5. Criar arquivo
+6. Escrever arquivo
+7. Ler arquivo
+8. Copiar arquivo
+9. Mover ou renomear arquivo
+10. Excluir arquivo
+11. Detalhes
+12. Alterar permissoes
+13. Trocar usuario
+14. Simular execucao
+15. Mostrar blocos
+16. Criar usuario
+0. Sair
+Opcao: Pasta (nome ou caminho absoluto): Sucesso
+
+Usuario: ana | Grupo: alunos | Pasta atual: /a
+1. Listar conteudo
+2. Criar pasta
+3. Entrar em pasta (nome ou absoluto)
+4. Voltar ao pai
+5. Criar arquivo
+6. Escrever arquivo
+7. Ler arquivo
+8. Copiar arquivo
+9. Mover ou renomear arquivo
+10. Excluir arquivo
+11. Detalhes
+12. Alterar permissoes
+13. Trocar usuario
+14. Simular execucao
+15. Mostrar blocos
+16. Criar usuario
+0. Sair
+Opcao: Nome na pasta atual: Sucesso
+
+Usuario: ana | Grupo: alunos | Pasta atual: /a
+1. Listar conteudo
+2. Criar pasta
+3. Entrar em pasta (nome ou absoluto)
+4. Voltar ao pai
+5. Criar arquivo
+6. Escrever arquivo
+7. Ler arquivo
+8. Copiar arquivo
+9. Mover ou renomear arquivo
+10. Excluir arquivo
+11. Detalhes
+12. Alterar permissoes
+13. Trocar usuario
+14. Simular execucao
+15. Mostrar blocos
+16. Criar usuario
+0. Sair
+Opcao: Pasta (nome ou caminho absoluto): Sucesso
+
+Usuario: ana | Grupo: alunos | Pasta atual: /a/b
+1. Listar conteudo
+2. Criar pasta
+3. Entrar em pasta (nome ou absoluto)
+4. Voltar ao pai
+5. Criar arquivo
+6. Escrever arquivo
+7. Ler arquivo
+8. Copiar arquivo
+9. Mover ou renomear arquivo
+10. Excluir arquivo
+11. Detalhes
+12. Alterar permissoes
+13. Trocar usuario
+14. Simular execucao
+15. Mostrar blocos
+16. Criar usuario
+0. Sair
+Opcao: Nome na pasta atual: Tipo (1 numerico, 2 caractere, 3 binario, 4 programa): Sucesso
+
+Usuario: ana | Grupo: alunos | Pasta atual: /a/b
+1. Listar conteudo
+2. Criar pasta
+3. Entrar em pasta (nome ou absoluto)
+4. Voltar ao pai
+5. Criar arquivo
+6. Escrever arquivo
+7. Ler arquivo
+8. Copiar arquivo
+9. Mover ou renomear arquivo
+10. Excluir arquivo
+11. Detalhes
+12. Alterar permissoes
+13. Trocar usuario
+14. Simular execucao
+15. Mostrar blocos
+16. Criar usuario
+0. Sair
+Opcao: Nome na pasta atual: Conteudo (uma linha; vazio permitido): Sucesso
+
+Usuario: ana | Grupo: alunos | Pasta atual: /a/b
+1. Listar conteudo
+2. Criar pasta
+3. Entrar em pasta (nome ou absoluto)
+4. Voltar ao pai
+5. Criar arquivo
+6. Escrever arquivo
+7. Ler arquivo
+8. Copiar arquivo
+9. Mover ou renomear arquivo
+10. Excluir arquivo
+11. Detalhes
+12. Alterar permissoes
+13. Trocar usuario
+14. Simular execucao
+15. Mostrar blocos
+16. Criar usuario
+0. Sair
+Opcao: Nome na pasta atual: Destino: caminho absoluto da pasta: Nome final (para renomear, use a pasta atual como destino): Sucesso
+
+Usuario: ana | Grupo: alunos | Pasta atual: /a/b
+1. Listar conteudo
+2. Criar pasta
+3. Entrar em pasta (nome ou absoluto)
+4. Voltar ao pai
+5. Criar arquivo
+6. Escrever arquivo
+7. Ler arquivo
+8. Copiar arquivo
+9. Mover ou renomear arquivo
+10. Excluir arquivo
+11. Detalhes
+12. Alterar permissoes
+13. Trocar usuario
+14. Simular execucao
+15. Mostrar blocos
+16. Criar usuario
+0. Sair
+Opcao: Nome na pasta atual: Destino: caminho absoluto da pasta: Nome final (para renomear, use a pasta atual como destino): Sucesso
+
+Usuario: ana | Grupo: alunos | Pasta atual: /a/b
+1. Listar conteudo
+2. Criar pasta
+3. Entrar em pasta (nome ou absoluto)
+4. Voltar ao pai
+5. Criar arquivo
+6. Escrever arquivo
+7. Ler arquivo
+8. Copiar arquivo
+9. Mover ou renomear arquivo
+10. Excluir arquivo
+11. Detalhes
+12. Alterar permissoes
+13. Trocar usuario
+14. Simular execucao
+15. Mostrar blocos
+16. Criar usuario
+0. Sair
+Opcao: Usuarios cadastrados:
+ana (alunos)
+bruno (alunos)
+carla (visitantes)
+Nome do usuario: Sucesso
+
+Usuario: bruno | Grupo: alunos | Pasta atual: /a/b
+1. Listar conteudo
+2. Criar pasta
+3. Entrar em pasta (nome ou absoluto)
+4. Voltar ao pai
+5. Criar arquivo
+6. Escrever arquivo
+7. Ler arquivo
+8. Copiar arquivo
+9. Mover ou renomear arquivo
+10. Excluir arquivo
+11. Detalhes
+12. Alterar permissoes
+13. Trocar usuario
+14. Simular execucao
+15. Mostrar blocos
+16. Criar usuario
+0. Sair
+Opcao: Nome na pasta atual: Item nao encontrado
+
+Usuario: bruno | Grupo: alunos | Pasta atual: /a/b
+1. Listar conteudo
+2. Criar pasta
+3. Entrar em pasta (nome ou absoluto)
+4. Voltar ao pai
+5. Criar arquivo
+6. Escrever arquivo
+7. Ler arquivo
+8. Copiar arquivo
+9. Mover ou renomear arquivo
+10. Excluir arquivo
+11. Detalhes
+12. Alterar permissoes
+13. Trocar usuario
+14. Simular execucao
+15. Mostrar blocos
+16. Criar usuario
+0. Sair
+Opcao: Pasta (nome ou caminho absoluto): Sucesso
+
+Usuario: bruno | Grupo: alunos | Pasta atual: /
+1. Listar conteudo
+2. Criar pasta
+3. Entrar em pasta (nome ou absoluto)
+4. Voltar ao pai
+5. Criar arquivo
+6. Escrever arquivo
+7. Ler arquivo
+8. Copiar arquivo
+9. Mover ou renomear arquivo
+10. Excluir arquivo
+11. Detalhes
+12. Alterar permissoes
+13. Trocar usuario
+14. Simular execucao
+15. Mostrar blocos
+16. Criar usuario
+0. Sair
+Opcao: Nome na pasta atual: Permissao negada
+
+Usuario: bruno | Grupo: alunos | Pasta atual: /
+1. Listar conteudo
+2. Criar pasta
+3. Entrar em pasta (nome ou absoluto)
+4. Voltar ao pai
+5. Criar arquivo
+6. Escrever arquivo
+7. Ler arquivo
+8. Copiar arquivo
+9. Mover ou renomear arquivo
+10. Excluir arquivo
+11. Detalhes
+12. Alterar permissoes
+13. Trocar usuario
+14. Simular execucao
+15. Mostrar blocos
+16. Criar usuario
+0. Sair
+Opcao: Usuarios cadastrados:
+ana (alunos)
+bruno (alunos)
+carla (visitantes)
+Nome do usuario: Sucesso
+
+Usuario: ana | Grupo: alunos | Pasta atual: /
+1. Listar conteudo
+2. Criar pasta
+3. Entrar em pasta (nome ou absoluto)
+4. Voltar ao pai
+5. Criar arquivo
+6. Escrever arquivo
+7. Ler arquivo
+8. Copiar arquivo
+9. Mover ou renomear arquivo
+10. Excluir arquivo
+11. Detalhes
+12. Alterar permissoes
+13. Trocar usuario
+14. Simular execucao
+15. Mostrar blocos
+16. Criar usuario
+0. Sair
+Opcao: Nome na pasta atual: Sucesso
+
+Usuario: ana | Grupo: alunos | Pasta atual: /
+1. Listar conteudo
+2. Criar pasta
+3. Entrar em pasta (nome ou absoluto)
+4. Voltar ao pai
+5. Criar arquivo
+6. Escrever arquivo
+7. Ler arquivo
+8. Copiar arquivo
+9. Mover ou renomear arquivo
+10. Excluir arquivo
+11. Detalhes
+12. Alterar permissoes
+13. Trocar usuario
+14. Simular execucao
+15. Mostrar blocos
+16. Criar usuario
+0. Sair
+Opcao: Sistema liberado. Ate mais.
