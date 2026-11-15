@@ -7,7 +7,8 @@ gcc -std=c11 -Wall -Wextra -Wpedantic -Werror -x c -fsyntax-only include/sistema
 gcc -std=c11 -Wall -Wextra -Wpedantic -g -Iinclude src/*.c -o simulador
 gcc -std=c11 -Wall -Wextra -Wpedantic -Werror -g -Iinclude tests/test_sistema.c src/sistema.c src/pastas.c src/arquivos.c src/usuarios.c src/permissoes.c src/disco.c -o tests/test_sistema
 ./tests/test_sistema
-python3 tests/test_menu.py
+gcc -std=c11 -Wall -Wextra -Wpedantic -Werror -g tests/test_menu.c -o tests/test_menu
+./tests/test_menu
 gcc -std=c11 -Wall -Wextra -Wpedantic -Werror -g -Iinclude tests/test_falhas.c src/sistema.c src/pastas.c src/arquivos.c src/usuarios.c src/permissoes.c src/disco.c -Wl,--wrap=calloc -Wl,--wrap=time -o tests/test_falhas
 ./tests/test_falhas
 valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --error-exitcode=1 ./tests/test_sistema
@@ -52,7 +53,7 @@ Atualização de 15/11/2026: a avaliação será na própria máquina do usuári
 
 ## Extensão: cadastro de usuários
 
-Executados após a alteração: compilação de main.c/sistema.c/disco.c com C11, Wall, Wextra, Wpedantic e Werror; recompilação e execução de test_sistema, test_limites, test_falhas e test_menu.py, todos aprovados. Nova suíte:
+Executados após a alteração: compilação de main.c/sistema.c/disco.c com C11, Wall, Wextra, Wpedantic e Werror; recompilação e execução de test_sistema, test_limites, test_falhas e test_menu.c, todos aprovados. Nova suíte:
 
 ```bash
 gcc -std=c11 -Wall -Wextra -Wpedantic -Werror -g -Iinclude tests/test_usuarios.c src/sistema.c src/pastas.c src/arquivos.c src/usuarios.c src/permissoes.c src/disco.c -o tests/test_usuarios
@@ -63,7 +64,7 @@ valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1 ./tests/test
 Aprovados: cadastro nos dois grupos, troca para novos nomes, novo proprietário no FCB, acesso por grupo/outros, nome duplicado/inválido, grupo inválido, NULL, nomes de 63/64 bytes, lotação de 32 usuários e preservação do sistema nas falhas. Menu: cadastro, listagem na troca, detalhes do novo dono, duplicação, grupo inválido e EOF no cadastro. Valgrind: 4 alocações, 4 liberações, zero bytes pendentes e zero erros; log tests/valgrind_usuarios.log.
 `nLimite atualizado por solicitação do usuário para 67 usuários no total. Simulador recompilado com -Werror, sem avisos; test_usuarios recompilado e aprovado, incluindo preenchimento até MAX_USUARIOS=67 e recusa do 68º cadastro sem alteração do estado. O registro anterior de 32 corresponde à execução antes dessa mudança.
 
-Revisão de legibilidade: nomes abreviados substituídos por sistema, arquivo, diretorio, resultado e tamanho; auxiliares internos receberam nomes descritivos; seleção de classe de permissão e contagem de blocos foram escritas em passos explícitos. Compilação com -Werror sem avisos; test_sistema, test_usuarios (limite 67), test_limites, test_falhas e test_menu.py recompilados/executados e aprovados. Interfaces públicas mantidas.
+Revisão de legibilidade: nomes abreviados substituídos por sistema, arquivo, diretorio, resultado e tamanho; auxiliares internos receberam nomes descritivos; seleção de classe de permissão e contagem de blocos foram escritas em passos explícitos. Compilação com -Werror sem avisos; test_sistema, test_usuarios (limite 67), test_limites, test_falhas e test_menu.c recompilados/executados e aprovados. Interfaces públicas mantidas.
 
 
 ## Validação atual — vetores dinâmicos
@@ -79,7 +80,7 @@ gcc -std=c11 -Wall -Wextra -Wpedantic -Werror -g -Iinclude tests/test_dinamico.c
 valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --error-exitcode=1 ./tests/test_dinamico
 ```
 
-Também recompilados e executados test_sistema, test_usuarios, test_limites e test_falhas com os comandos anteriores; test_sistema atualizado para esperar crescimento após 32 entradas. test_menu.py ampliado para criar 40 pastas e 40 arquivos, listar e terminar por EOF. Todos aprovados, sem avisos na compilação.
+Também recompilados e executados test_sistema, test_usuarios, test_limites e test_falhas com os comandos anteriores; test_sistema atualizado para esperar crescimento após 32 entradas. test_menu.c ampliado para criar 40 pastas e 40 arquivos, listar e terminar por EOF. Todos aprovados, sem avisos na compilação.
 
 Nova suíte verifica 300 arquivos e 300 subpastas por diretório, preservação de ID/pai/referências, cópia independente, movimento, usuários até 67 e arquivo criado pelo usuário 67. Injeta falha em cada uma das duas alocações de inicialização, criação de pasta/arquivo/cópia, e no crescimento do destino de movimento e vetor de usuários. Compara Sistema, diretórios, vetor de entradas, FCB e usuários após recusas. Todos aprovados.
 
@@ -99,17 +100,30 @@ Logs atuais em tests/valgrind_dinamico.log, tests/valgrind_api.log, tests/valgri
 
 As 39 funções antes concentradas em sistema.c foram distribuídas entre sistema.c, pastas.c, arquivos.c, usuarios.c e permissoes.c, sem alterar seus corpos; os auxiliares usados por vários módulos passaram a ter declarações em sistema_interno.h. Funções exclusivas de cada módulo continuam static. Interfaces públicas preservadas.
 
-Comandos de compilação deste documento, README e COMANDOS_CMD.txt atualizados para todos os fontes. Compilação com C11, Wall, Wextra, Wpedantic e Werror sem avisos. Recompilados/executados test_sistema, test_limites, test_usuarios, test_falhas e test_dinamico, além de test_menu.py: todos aprovados. Valgrind repetido em test_sistema, test_dinamico e sessão do menu: zero erros, zero bytes em uso ao sair. Comando do COMANDOS_CMD.txt executado pelo CMD: compilação, abertura e saída com opção 0 aprovadas.
+Comandos de compilação deste documento, README e COMANDOS_CMD.txt atualizados para todos os fontes. Compilação com C11, Wall, Wextra, Wpedantic e Werror sem avisos. Recompilados/executados test_sistema, test_limites, test_usuarios, test_falhas e test_dinamico, além de test_menu.c: todos aprovados. Valgrind repetido em test_sistema, test_dinamico e sessão do menu: zero erros, zero bytes em uso ao sair. Comando do COMANDOS_CMD.txt executado pelo CMD: compilação, abertura e saída com opção 0 aprovadas.
 
 ## Fontes movidos para src/
 
-Todos os .c e .h do programa foram movidos para src/, sem mudar seus conteudos. README, COMANDOS_CMD.txt e comandos de teste atualizados: src/*.c para o programa e -Iinclude nos testes. Compilacao com -Werror sem avisos; cinco suites C recompiladas e aprovadas (sistema, limites, usuarios, falhas e dinamico), alem de test_menu.py. O comando atualizado foi executado pelo CMD, compilou, abriu o menu e saiu com opcao 0.
+Todos os .c e .h do programa foram movidos para src/, sem mudar seus conteudos. README, COMANDOS_CMD.txt e comandos de teste atualizados: src/*.c para o programa e -Iinclude nos testes. Compilacao com -Werror sem avisos; cinco suites C recompiladas e aprovadas (sistema, limites, usuarios, falhas e dinamico), alem de test_menu.c. O comando atualizado foi executado pelo CMD, compilou, abriu o menu e saiu com opcao 0.
 
 ## Headers separados em include/
 
-Os arquivos .c ficam em src/; sistema.h e sistema_interno.h agora ficam em include/. Comandos atualizados com -Iinclude. Programa e cinco suites C recompilados com -Werror sem avisos; todas as suites e test_menu.py aprovados. Comando pelo CMD tambem compilou, abriu o menu e encerrou com opcao 0.
+Os arquivos .c ficam em src/; sistema.h e sistema_interno.h agora ficam em include/. Comandos atualizados com -Iinclude. Programa e cinco suites C recompilados com -Werror sem avisos; todas as suites e test_menu.c aprovados. Comando pelo CMD tambem compilou, abriu o menu e encerrou com opcao 0.
 
 
 ## Navegação somente por nome
 
-Menu e operação alterados para aceitar apenas nomes simples. Testes adaptados para subir pela operação de voltar ao pai; a resolução de caminhos absolutos permanece testada separadamente para cópia/movimento. Adicionado cenário de menu que recusa /a e a/b sem mudar a pasta, entra por a e b e retorna ao pai até a raiz. Programa compilado com -Werror sem avisos; todas as cinco suítes C e test_menu.py aprovados. Sessão gravada e roteiro ajustados à navegação por nome.
+Menu e operação alterados para aceitar apenas nomes simples. Testes adaptados para subir pela operação de voltar ao pai; a resolução de caminhos absolutos permanece testada separadamente para cópia/movimento. Adicionado cenário de menu que recusa /a e a/b sem mudar a pasta, entra por a e b e retorna ao pai até a raiz. Programa compilado com -Werror sem avisos; todas as cinco suítes C e test_menu.c aprovados. Sessão gravada e roteiro ajustados à navegação por nome.
+
+
+## Testes de menu em C
+
+O teste de integracao `tests/test_menu.c` substitui o antigo script Python e preserva os cenarios de entradas invalidas, limites de texto, criacao/leitura de arquivos, copia/movimento, permissoes, cadastro de usuarios, EOF, mais de 32 entradas e navegacao. Compilar `simulador` antes do teste e executar a partir da raiz do projeto (Ubuntu/WSL):
+
+```bash
+gcc -std=c11 -Wall -Wextra -Wpedantic -Werror -g -Iinclude src/*.c -o simulador
+gcc -std=c11 -Wall -Wextra -Wpedantic -Werror -g tests/test_menu.c -o tests/test_menu
+./tests/test_menu
+```
+
+Esse teste usa recursos POSIX (`fork`, `execl`, `tmpfile`) disponiveis no Linux/WSL; nao depende de Python. A migracao do teste nao altera os demais arquivos `.c` nem os seus resultados historicos registrados acima. O novo teste deve ser executado no ambiente de avaliacao para confirmar a validacao.
