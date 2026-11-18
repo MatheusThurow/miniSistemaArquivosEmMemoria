@@ -41,4 +41,4 @@ O disco possui 128 blocos de 64 bytes (8 KB), e cada arquivo pode ter até 1.024
 
 Os diretórios formam uma árvore com alocação dinâmica. Cada arquivo possui um FCB com seus metadados e índices de blocos. As permissões usam máscaras de bits para proprietário, grupo e outros.
 
-Veja os comandos de teste em [docs/TESTES.md](docs/TESTES.md) e um roteiro de uso em [docs/DEMONSTRACAO.md](docs/DEMONSTRACAO.md).
+Veja os comandos de teste em [docs/TESTES.md](docs/TESTES.md).
