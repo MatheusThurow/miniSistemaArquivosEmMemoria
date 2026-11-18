@@ -12,6 +12,22 @@ static void mostrar_menu(void) {
         "1. Listar conteudo\n2. Criar pasta\n3. Entrar em subpasta pelo nome\n4. Voltar ao pai\n5. Criar arquivo\n6. Escrever arquivo\n7. Ler arquivo\n8. Copiar arquivo\n9. Mover ou renomear arquivo\n10. Excluir arquivo\n11. Detalhes\n12. Alterar permissoes\n13. Trocar usuario\n14. Simular execucao\n15. Mostrar blocos\n16. Criar usuario\n0. Sair");
 }
 
+static void mostrar_localizacao(const Sistema *sistema, const char *caminho) {
+    const Usuario *usuario = &sistema->usuarios[sistema->usuario_atual];
+    printf("Usuario: %s | Grupo: %s | Pasta atual: %s\n",
+           usuario->nome, grupo_nome(usuario->grupo), caminho);
+    fputs("Arquivos com leitura permitida:", stdout);
+    bool encontrou = false;
+    for (size_t i = 0; i < sistema->atual->quantidade_arquivos; ++i) {
+        const Arquivo *arquivo = sistema->atual->arquivos[i];
+        if (arquivo_tem_permissao(arquivo, usuario, PERM_R)) {
+            printf("%s%s", encontrou ? ", " : " ", arquivo->nome);
+            encontrou = true;
+        }
+    }
+    puts(encontrou ? "" : " nenhum");
+}
+
 // le uma linha: retorna 1 se valida, 0 no fim ou -1 se longa
 static int ler_linha(const char *mensagem, char *texto, size_t limite) {
     printf("%s", mensagem);
@@ -128,9 +144,8 @@ int main(void) {
     mostrar_menu();
     for (;;) {
         sistema_caminho_atual(&sistema, caminho, sizeof caminho);
-        printf("\nUsuario: %s | Grupo: %s | Pasta atual: %s\n",
-               sistema.usuarios[sistema.usuario_atual].nome,
-               grupo_nome(sistema.usuarios[sistema.usuario_atual].grupo), caminho);
+        puts("");
+        mostrar_localizacao(&sistema, caminho);
         situacao_leitura = ler_linha("Opcao: ", entrada, MAX_CONTEUDO);
         if (!situacao_leitura) {
             break;
@@ -149,6 +164,7 @@ int main(void) {
             fputs("\033[H\033[2J", stdout);
             mostrar_menu();
             puts("");
+            mostrar_localizacao(&sistema, caminho);
         }
         resultado = SIS_OK;
         if (opcao == 1) {
@@ -234,6 +250,7 @@ int main(void) {
                 size_t tamanho_lido;
                 resultado = sistema_ler_arquivo(&sistema, nome, bytes, sizeof bytes, &tamanho_lido);
                 if (resultado == SIS_OK) {
+                    printf("Arquivo: %s%s%s\n", caminho, strcmp(caminho, "/") == 0 ? "" : "/", nome);
                     fwrite(bytes, 1, tamanho_lido, stdout);
                     puts("");
                 }
