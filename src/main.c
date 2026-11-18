@@ -10,6 +10,7 @@
 static void mostrar_menu(void) {
     puts(
         "1. Listar conteudo\n2. Criar pasta\n3. Entrar em subpasta pelo nome\n4. Voltar ao pai\n5. Criar arquivo\n6. Escrever arquivo\n7. Ler arquivo\n8. Copiar arquivo\n9. Mover ou renomear arquivo\n10. Excluir arquivo\n11. Detalhes\n12. Alterar permissoes\n13. Trocar usuario\n14. Simular execucao\n15. Mostrar blocos\n16. Criar usuario\n0. Sair");
+    puts("\nDurante uma operacao, digite cancelar para voltar ao menu.");
 }
 
 static void mostrar_localizacao(const Sistema *sistema, const char *caminho) {
@@ -18,19 +19,40 @@ static void mostrar_localizacao(const Sistema *sistema, const char *caminho) {
            usuario->nome, grupo_nome(usuario->grupo), caminho);
 }
 
-static void mostrar_arquivos_legiveis(const Sistema *sistema) {
+static bool arquivo_disponivel(const Arquivo *arquivo, const Usuario *usuario, long opcao) {
+    switch (opcao) {
+    case 6:
+        return arquivo_tem_permissao(arquivo, usuario, PERM_W);
+    case 7:
+    case 8:
+        return arquivo_tem_permissao(arquivo, usuario, PERM_R);
+    case 9:
+    case 10:
+    case 12:
+        return arquivo_e_proprietario(arquivo, usuario);
+    case 14:
+        return arquivo->tipo == TIPO_PROGRAMA && arquivo_tem_permissao(arquivo, usuario, PERM_X);
+    case 11:
+        return true; // detalhes sao metadados visiveis a todos
+    default:
+        return false;
+    }
+}
+
+static bool mostrar_arquivos_disponiveis(const Sistema *sistema, long opcao, const char *rotulo) {
     const Usuario *usuario = &sistema->usuarios[sistema->usuario_atual];
     bool encontrou = false;
     for (size_t i = 0; i < sistema->atual->quantidade_arquivos; ++i) {
         const Arquivo *arquivo = sistema->atual->arquivos[i];
-        if (arquivo_tem_permissao(arquivo, usuario, PERM_R)) {
-            printf("%s%s", encontrou ? ", " : "Arquivos com leitura permitida: ", arquivo->nome);
+        if (arquivo_disponivel(arquivo, usuario, opcao)) {
+            printf("%s%s", encontrou ? ", " : rotulo, arquivo->nome);
             encontrou = true;
         }
     }
     if (encontrou) {
         puts("");
     }
+    return encontrou;
 }
 
 // le uma linha: retorna 1 se valida, 0 no fim ou -1 se longa
@@ -58,6 +80,16 @@ static int ler_linha(const char *mensagem, char *texto, size_t limite) {
         return -1;
     }
     return 1;
+}
+
+static int ler_entrada_operacao(const char *mensagem, char *texto, size_t limite) {
+    int resultado = ler_linha(mensagem, texto, limite);
+    if (resultado == 1 &&
+        (strcmp(texto, "cancelar") == 0 || strcmp(texto, ":cancelar") == 0)) {
+        puts("Operacao cancelada.");
+        return -1;
+    }
+    return resultado;
 }
 
 // converte o texto em numero e verifica a faixa permitida
@@ -151,7 +183,7 @@ int main(void) {
         sistema_caminho_atual(&sistema, caminho, sizeof caminho);
         puts("");
         mostrar_localizacao(&sistema, caminho);
-        mostrar_arquivos_legiveis(&sistema);
+        mostrar_arquivos_disponiveis(&sistema, 7, "Arquivos com leitura permitida: ");
         situacao_leitura = ler_linha("Opcao: ", entrada, MAX_CONTEUDO);
         if (!situacao_leitura) {
             break;
@@ -200,7 +232,7 @@ int main(void) {
                 printf("[pasta] %s\n", sistema.atual->subpastas[i]->nome);
             }
             situacao_leitura =
-                ler_linha("Nome da subpasta: ", nome, MAX_NOME);
+                ler_entrada_operacao("Nome da subpasta: ", nome, MAX_NOME);
             if (!situacao_leitura) {
                 break;
             }
@@ -216,9 +248,26 @@ int main(void) {
                            grupo_nome(sistema.usuarios[i].grupo));
                 }
             }
-            situacao_leitura = ler_linha(
-                opcao == 13 || opcao == 16 ? "Nome do usuario: " : "Nome na pasta atual: ", nome,
-                MAX_NOME);
+            static const char *const perguntas[] = {
+                [2] = "Nome da nova pasta: ",
+                [5] = "Nome do novo arquivo: ",
+                [6] = "Nome do arquivo para editar: ",
+                [7] = "Nome do arquivo para ler: ",
+                [8] = "Nome do arquivo para copiar: ",
+                [9] = "Nome do arquivo para mover ou renomear: ",
+                [10] = "Nome do arquivo para excluir: ",
+                [11] = "Nome do arquivo para ver detalhes: ",
+                [12] = "Nome do arquivo para alterar permissoes: ",
+                [13] = "Nome do usuario: ",
+                [14] = "Nome do programa para executar: ",
+                [16] = "Nome do usuario: ",
+            };
+            if ((opcao >= 6 && opcao <= 12) || opcao == 14) {
+                if (!mostrar_arquivos_disponiveis(&sistema, opcao, "Arquivos disponiveis: ")) {
+                    puts("Nenhum arquivo disponivel para esta operacao na pasta atual.");
+                }
+            }
+            situacao_leitura = ler_entrada_operacao(perguntas[opcao], nome, MAX_NOME);
             if (!situacao_leitura) {
                 break;
             }
@@ -231,8 +280,8 @@ int main(void) {
                 break;
             case 5:
                 situacao_leitura =
-                    ler_linha("Tipo (1 numerico, 2 caractere, 3 binario, 4 programa): ", entrada,
-                              MAX_CONTEUDO);
+                    ler_entrada_operacao("Tipo (1 numerico, 2 caractere, 3 binario, 4 programa): ",
+                                         entrada, MAX_CONTEUDO);
                 if (situacao_leitura != 1) {
                     break;
                 }
@@ -244,7 +293,8 @@ int main(void) {
                 break;
             case 6:
                 situacao_leitura =
-                    ler_linha("Conteudo (uma linha; vazio permitido): ", entrada, MAX_CONTEUDO);
+                    ler_entrada_operacao("Conteudo (uma linha; vazio permitido): ", entrada,
+                                         MAX_CONTEUDO);
                 if (situacao_leitura != 1) {
                     break;
                 }
@@ -265,11 +315,12 @@ int main(void) {
             case 8:
             case 9:
                 situacao_leitura =
-                    ler_linha("Destino: caminho absoluto da pasta: ", destino, TAM_CAMINHO - 1);
+                    ler_entrada_operacao("Destino: caminho absoluto da pasta: ", destino,
+                                         TAM_CAMINHO - 1);
                 if (situacao_leitura != 1) {
                     break;
                 }
-                situacao_leitura = ler_linha(
+                situacao_leitura = ler_entrada_operacao(
                     "Nome final (para renomear, use a pasta atual como destino): ", novo_nome,
                     MAX_NOME);
                 if (situacao_leitura != 1) {
@@ -294,7 +345,7 @@ int main(void) {
             }
             case 12:
                 situacao_leitura =
-                    ler_linha("Permissoes (tres digitos 0-7): ", entrada, MAX_CONTEUDO);
+                    ler_entrada_operacao("Permissoes (tres digitos 0-7): ", entrada, MAX_CONTEUDO);
                 if (situacao_leitura != 1) {
                     break;
                 }
@@ -302,7 +353,7 @@ int main(void) {
                 break;
             case 16:
                 situacao_leitura =
-                    ler_linha("Grupo (1 alunos, 2 visitantes): ", entrada, MAX_CONTEUDO);
+                    ler_entrada_operacao("Grupo (1 alunos, 2 visitantes): ", entrada, MAX_CONTEUDO);
                 if (situacao_leitura != 1) {
                     break;
                 }
