@@ -5,6 +5,12 @@
 #include <errno.h>
 #include <ctype.h>
 #include <inttypes.h>
+#include <unistd.h>
+
+static void mostrar_menu(void) {
+    puts(
+        "1. Listar conteudo\n2. Criar pasta\n3. Entrar em subpasta pelo nome\n4. Voltar ao pai\n5. Criar arquivo\n6. Escrever arquivo\n7. Ler arquivo\n8. Copiar arquivo\n9. Mover ou renomear arquivo\n10. Excluir arquivo\n11. Detalhes\n12. Alterar permissoes\n13. Trocar usuario\n14. Simular execucao\n15. Mostrar blocos\n16. Criar usuario\n0. Sair");
+}
 
 // le uma linha: retorna 1 se valida, 0 no fim ou -1 se longa
 static int ler_linha(const char *mensagem, char *texto, size_t limite) {
@@ -113,13 +119,18 @@ int main(void) {
         novo_nome[MAX_NOME + 2], caminho[TAM_CAMINHO];
     long opcao, tipo;
     int situacao_leitura;
+    const char *terminal = getenv("TERM");
+    bool tela_interativa = isatty(STDIN_FILENO) && isatty(STDOUT_FILENO) &&
+                           terminal && strcmp(terminal, "dumb") != 0;
+    if (tela_interativa) {
+        fputs("\033[H\033[2J", stdout);
+    }
+    mostrar_menu();
     for (;;) {
         sistema_caminho_atual(&sistema, caminho, sizeof caminho);
         printf("\nUsuario: %s | Grupo: %s | Pasta atual: %s\n",
                sistema.usuarios[sistema.usuario_atual].nome,
                grupo_nome(sistema.usuarios[sistema.usuario_atual].grupo), caminho);
-        puts(
-            "1. Listar conteudo\n2. Criar pasta\n3. Entrar em subpasta pelo nome\n4. Voltar ao pai\n5. Criar arquivo\n6. Escrever arquivo\n7. Ler arquivo\n8. Copiar arquivo\n9. Mover ou renomear arquivo\n10. Excluir arquivo\n11. Detalhes\n12. Alterar permissoes\n13. Trocar usuario\n14. Simular execucao\n15. Mostrar blocos\n16. Criar usuario\n0. Sair");
         situacao_leitura = ler_linha("Opcao: ", entrada, MAX_CONTEUDO);
         if (!situacao_leitura) {
             break;
@@ -133,6 +144,11 @@ int main(void) {
         }
         if (!opcao) {
             break;
+        }
+        if (tela_interativa) {
+            fputs("\033[H\033[2J", stdout);
+            mostrar_menu();
+            puts("");
         }
         resultado = SIS_OK;
         if (opcao == 1) {
