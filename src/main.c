@@ -169,6 +169,14 @@ int main(void) {
             mostrar_blocos(sistema.raiz, "");
             continue;
         } else if (opcao == 3) {
+            if (sistema.atual->quantidade_subpastas == 0) {
+                puts("Nao ha subpastas na pasta atual.");
+                continue;
+            }
+            puts("Subpastas disponiveis:");
+            for (size_t i = 0; i < sistema.atual->quantidade_subpastas; ++i) {
+                printf("[pasta] %s\n", sistema.atual->subpastas[i]->nome);
+            }
             situacao_leitura =
                 ler_linha("Nome da subpasta: ", nome, MAX_NOME);
             if (!situacao_leitura) {
