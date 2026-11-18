@@ -16,16 +16,21 @@ static void mostrar_localizacao(const Sistema *sistema, const char *caminho) {
     const Usuario *usuario = &sistema->usuarios[sistema->usuario_atual];
     printf("Usuario: %s | Grupo: %s | Pasta atual: %s\n",
            usuario->nome, grupo_nome(usuario->grupo), caminho);
-    fputs("Arquivos com leitura permitida:", stdout);
+}
+
+static void mostrar_arquivos_legiveis(const Sistema *sistema) {
+    const Usuario *usuario = &sistema->usuarios[sistema->usuario_atual];
     bool encontrou = false;
     for (size_t i = 0; i < sistema->atual->quantidade_arquivos; ++i) {
         const Arquivo *arquivo = sistema->atual->arquivos[i];
         if (arquivo_tem_permissao(arquivo, usuario, PERM_R)) {
-            printf("%s%s", encontrou ? ", " : " ", arquivo->nome);
+            printf("%s%s", encontrou ? ", " : "Arquivos com leitura permitida: ", arquivo->nome);
             encontrou = true;
         }
     }
-    puts(encontrou ? "" : " nenhum");
+    if (encontrou) {
+        puts("");
+    }
 }
 
 // le uma linha: retorna 1 se valida, 0 no fim ou -1 se longa
@@ -146,6 +151,7 @@ int main(void) {
         sistema_caminho_atual(&sistema, caminho, sizeof caminho);
         puts("");
         mostrar_localizacao(&sistema, caminho);
+        mostrar_arquivos_legiveis(&sistema);
         situacao_leitura = ler_linha("Opcao: ", entrada, MAX_CONTEUDO);
         if (!situacao_leitura) {
             break;
