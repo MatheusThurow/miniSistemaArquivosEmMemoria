@@ -344,6 +344,8 @@ int main(void) {
                 break;
             }
             case 12:
+                puts("Ordem: dono, grupo, demais usuarios. Exemplo: 444 = todos podem ler.");
+                puts("Some os valores: 4 = ler, 2 = escrever, 1 = executar. 0 = sem acesso.");
                 situacao_leitura =
                     ler_entrada_operacao("Permissoes (tres digitos 0-7): ", entrada, MAX_CONTEUDO);
                 if (situacao_leitura != 1) {
